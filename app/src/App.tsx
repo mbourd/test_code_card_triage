@@ -1,6 +1,6 @@
 import "./App.css";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { useEffect, useState, createContext } from "react";
+import { useEffect, useState, createContext, Fragment } from "react";
 import { services } from ".";
 import FormFilter from "./components/FormFilter";
 import PatientCard from "./components/PatientCard";
@@ -49,7 +49,7 @@ function App() {
           <Row>
             {listStatus.map((status, i) => {
               return (
-                <Col>
+                <Col key={`status-${i}`}>
                   <Card className="container-patients-card">
                     <Card.Header as="h2">{status}</Card.Header>
                     <Card.Body>
@@ -61,11 +61,11 @@ function App() {
                                 <PatientCard key={`card-id-${i}`} card={card} />
                               );
                             } else {
-                              return <></>;
+                              return <Fragment key={i}></Fragment>;
                             }
 
                           default:
-                            return <></>;
+                            return <Fragment key={i}></Fragment>;
                         }
                       })}
                     </Card.Body>

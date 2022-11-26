@@ -42,7 +42,7 @@ const PatientCard: React.FC<OwnProps> = ({ card }) => {
             <Card.Body>
               <ListGroup>
               {card.arrhythmias.map((v: string, i: number) => {
-                return <ListGroup.Item>{v}</ListGroup.Item>
+                return <ListGroup.Item key={`arrhythmia-${i}`}>{v}</ListGroup.Item>
               })}
               </ListGroup>
             </Card.Body>
