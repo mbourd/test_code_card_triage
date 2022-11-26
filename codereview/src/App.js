@@ -11,7 +11,7 @@ function App() {
     fetch('http://localhost:3000/cards')
       .then(resp => resp.json())
       .then(data => {
-        data.forEach((idx, card) => card.display = true);
+        data.forEach((card) => card.display = true);
         setCards(data);
       })
   }, [])
