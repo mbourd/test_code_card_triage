@@ -56,13 +56,7 @@ function App() {
                       {cardsDisplayed.map((card, i) => {
                         switch (card.status) {
                           case status:
-                            if (card.display === true) {
-                              return (
-                                <PatientCard key={`card-id-${i}`} card={card} />
-                              );
-                            } else {
-                              return <Fragment key={i}></Fragment>;
-                            }
+                            return <PatientCard key={`card-id-${i}`} card={card} />;
 
                           default:
                             return <Fragment key={i}></Fragment>;
