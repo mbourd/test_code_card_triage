@@ -1,26 +1,36 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Col, Row, Button, Form, InputGroup } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { AppContent, ContextApp, ICard } from "../App";
+
+interface ILabelArrhytmia {
+  label: string;
+  value: string;
+}
 
 const FormFilter = (props: any) => {
   const contextAppValue = useContext<AppContent>(ContextApp);
 
   const [currentCategory, setCurrentCategory] = useState<string>("all");
   const [currentKeyword, setCurrentKeyword] = useState<string>("");
+  const [categoriesArrhythmias, setCategoriesArrhythmias] = useState<ILabelArrhytmia[]>([])
 
   const cardsDisplayed: ICard[] = contextAppValue.cardsDisplayed;
   const setCardsDisplayed: (c: ICard[]) => void =
     contextAppValue.setCardsDisplayed;
 
-  const categoriesArrhythmias = [
-    { label: "AFib", value: "AFib" },
-    { label: "AV Block", value: "AV Block" },
-    { label: "Pause", value: "Pause" },
-    { label: "PSVC", value: "PSVC" },
-    { label: "PVC", value: "PVC" },
-  ];
+  useEffect(() => {
+    let listArrhytmias: string[] = []
+    cardsDisplayed.forEach((c: ICard) => {
+      c.arrhythmias.forEach((a: string) => {
+        if (!listArrhytmias.includes(a)) {
+          listArrhytmias.push(a)
+        }
+      })
+    })
+    setCategoriesArrhythmias(listArrhytmias.map((a:string) => ({label:a, value:a})))
+  },[])
 
   return (
     <Formik
