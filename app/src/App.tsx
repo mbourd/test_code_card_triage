@@ -35,8 +35,7 @@ function App() {
       .getAllCards()
       .then((resp) => resp.json())
       .then((data) => {
-        data.forEach((card: any) => (card.display = true));
-        setCardsDisplayed(data);
+        setCardsDisplayed(data.map((card:any) => ({...data, display : true})));
       });
   }, []);
 
