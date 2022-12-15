@@ -16,9 +16,8 @@ const FormFilter = (props: any) => {
   const [currentKeyword, setCurrentKeyword] = useState<string>("");
   const [categoriesArrhythmias, setCategoriesArrhythmias] = useState<ILabelArrhytmia[]>([])
 
-  const cardsDisplayed: ICard[] = contextAppValue.cardsDisplayed;
-  const setCardsDisplayed: (c: ICard[]) => void =
-    contextAppValue.setCardsDisplayed;
+  const cardsDisplayed = contextAppValue.cardsDisplayed;
+  const setCardsDisplayed = contextAppValue.setCardsDisplayed;
 
   useEffect(() => {
     let listArrhytmias: string[] = []
@@ -30,7 +29,7 @@ const FormFilter = (props: any) => {
       })
     })
     setCategoriesArrhythmias(listArrhytmias.map((a:string) => ({label:a, value:a})))
-  },[])
+  },[cardsDisplayed])
 
   return (
     <Formik

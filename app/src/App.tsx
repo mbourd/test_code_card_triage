@@ -15,7 +15,7 @@ export interface ICard {
 }
 export type AppContent = {
   cardsDisplayed: ICard[];
-  setCardsDisplayed: (c: ICard[]) => void;
+  setCardsDisplayed: React.Dispatch<React.SetStateAction<ICard[]>>;
 };
 export const ContextApp = createContext<AppContent>({
   cardsDisplayed: [],
@@ -35,7 +35,7 @@ function App() {
       .getAllCards()
       .then((resp) => resp.json())
       .then((data) => {
-        setCardsDisplayed(data.map((card:any) => ({...data, display : true})));
+        setCardsDisplayed(data.map((card:any) => ({...card, display : true})));
       });
   }, []);
 
@@ -79,24 +79,35 @@ function App() {
                   <Card className="container-patients-card">
                     <Card.Header as="h2">{status}</Card.Header>
                     <Card.Body>
-                      {status === "PENDING" &&
-                        pendingCards.map((card, i) => {
-                          return (
-                            <PatientCard key={`card-id-${i}`} card={card} />
-                          );
-                        })}
-                      {status === "REJECTED" &&
-                        rejectedCards.map((card, i) => {
-                          return (
-                            <PatientCard key={`card-id-${i}`} card={card} />
-                          );
-                        })}
-                      {status === "DONE" &&
-                        doneCards.map((card, i) => {
-                          return (
-                            <PatientCard key={`card-id-${i}`} card={card} />
-                          );
-                        })}
+                      {(() => {
+                        switch (status) {
+                          case "PENDING":
+                            return pendingCards.map((card, i) => {
+                              return (
+                                <PatientCard key={`card-id-${i}`} card={card} />
+                              );
+                            })
+                            break;
+                          case "REJECTED":
+                            return rejectedCards.map((card, i) => {
+                              return (
+                                <PatientCard key={`card-id-${i}`} card={card} />
+                              );
+                            })
+                            break;
+                          case "DONE":
+                            return doneCards.map((card, i) => {
+                              return (
+                                <PatientCard key={`card-id-${i}`} card={card} />
+                              );
+                            })
+                            break;
+
+                          default:
+                            return <Fragment></Fragment>
+                            break;
+                        }
+                      })()}
                     </Card.Body>
                   </Card>
                 </Col>
