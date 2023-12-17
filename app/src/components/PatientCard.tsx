@@ -27,7 +27,7 @@ const PatientCard: React.FC<IOwnProps> = ({ card }) => {
       cardsDisplayed[cardsDisplayed.indexOf(card)].status = 'DONE';
       setCardsDisplayed([...cardsDisplayed]);
     },
-    [cardsDisplayed, setCardsDisplayed]
+    [cardsDisplayed, setCardsDisplayed],
   );
 
   const onClickReject = useCallback(
@@ -35,7 +35,7 @@ const PatientCard: React.FC<IOwnProps> = ({ card }) => {
       cardsDisplayed[cardsDisplayed.indexOf(card)].status = 'REJECTED';
       setCardsDisplayed([...cardsDisplayed]);
     },
-    [cardsDisplayed, setCardsDisplayed]
+    [cardsDisplayed, setCardsDisplayed],
   );
 
   const show = () => {

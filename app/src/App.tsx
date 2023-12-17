@@ -67,8 +67,8 @@ function App() {
 
   return (
     <ContextApp.Provider value={{ cardsDisplayed, setCardsDisplayed }}>
-      <div className="App">
-        <header className="App-header">
+      <div className='App'>
+        <header className='App-header'>
           <Row>
             <FormFilter />
           </Row>
@@ -78,27 +78,36 @@ function App() {
             {listStatus.map((status, i) => {
               return (
                 <Col key={`status-${i}`}>
-                  <Card className="container-patients-card">
-                    <Card.Header as="h2">{status}</Card.Header>
+                  <Card className='container-patients-card'>
+                    <Card.Header as='h2'>{status}</Card.Header>
                     <Card.Body>
                       {(() => {
                         switch (status) {
                           case 'PENDING':
                             return pendingCards.map((card, i) => {
                               return (
-                                <PatientCard key={`card-id-${i}`} card={card} />
+                                <PatientCard
+                                  key={`card-id-${i}`}
+                                  card={card}
+                                />
                               );
                             });
                           case 'REJECTED':
                             return rejectedCards.map((card, i) => {
                               return (
-                                <PatientCard key={`card-id-${i}`} card={card} />
+                                <PatientCard
+                                  key={`card-id-${i}`}
+                                  card={card}
+                                />
                               );
                             });
                           case 'DONE':
                             return doneCards.map((card, i) => {
                               return (
-                                <PatientCard key={`card-id-${i}`} card={card} />
+                                <PatientCard
+                                  key={`card-id-${i}`}
+                                  card={card}
+                                />
                               );
                             });
                           default:

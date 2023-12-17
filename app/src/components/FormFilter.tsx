@@ -31,7 +31,7 @@ const FormFilter = (props: any) => {
       });
     });
     setCategoriesArrhythmias(
-      listArrhytmias.map((a: string) => ({ label: a, value: a }))
+      listArrhytmias.map((a: string) => ({ label: a, value: a })),
     );
   }, [cardsDisplayed]);
 
@@ -58,7 +58,7 @@ const FormFilter = (props: any) => {
 
         for (let i = 0; i < cardsDisplayed.length; i++) {
           let nameMatch = new RegExp(patientName).test(
-            cardsDisplayed[i].patient_name
+            cardsDisplayed[i].patient_name,
           );
 
           if (arrhythmia === 'all') {
@@ -66,7 +66,7 @@ const FormFilter = (props: any) => {
           } else {
             let test1 = patientName === '' ? true : nameMatch;
             let test2 = cardsDisplayed[i].arrhythmias.find(
-              (name) => name === arrhythmia
+              (name) => name === arrhythmia,
             )
               ? true
               : false;
