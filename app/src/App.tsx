@@ -1,9 +1,9 @@
-import "./App.css";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import { useEffect, useState, createContext, Fragment } from "react";
-import { services } from ".";
-import FormFilter from "./components/FormFilter";
-import PatientCard from "./components/PatientCard";
+import './App.css';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import { useEffect, useState, createContext, Fragment } from 'react';
+import { services } from '.';
+import FormFilter from './components/FormFilter';
+import PatientCard from './components/PatientCard';
 
 export interface ICard {
   status: string;
@@ -28,14 +28,16 @@ function App() {
   const [rejectedCards, setRejectedCards] = useState<ICard[]>([]);
   const [doneCards, setDoneCards] = useState<ICard[]>([]);
 
-  const listStatus: string[] = ["PENDING", "REJECTED", "DONE"];
+  const listStatus: string[] = ['PENDING', 'REJECTED', 'DONE'];
 
   useEffect(() => {
     services.app
       .getAllCards()
       .then((resp) => resp.json())
       .then((data) => {
-        setCardsDisplayed(data.map((card:any) => ({...card, display : true})));
+        setCardsDisplayed(
+          data.map((card: any) => ({ ...card, display: true })),
+        );
       });
   }, []);
 
@@ -45,13 +47,13 @@ function App() {
     let doneCards: ICard[] = [];
     cardsDisplayed.forEach((card: ICard) => {
       switch (card.status) {
-        case "PENDING":
+        case 'PENDING':
           pendingCards.push(card);
           break;
-        case "REJECTED":
+        case 'REJECTED':
           rejectedCards.push(card);
           break;
-        case "DONE":
+        case 'DONE':
           doneCards.push(card);
           break;
         default:
@@ -81,31 +83,26 @@ function App() {
                     <Card.Body>
                       {(() => {
                         switch (status) {
-                          case "PENDING":
+                          case 'PENDING':
                             return pendingCards.map((card, i) => {
                               return (
                                 <PatientCard key={`card-id-${i}`} card={card} />
                               );
-                            })
-                            break;
-                          case "REJECTED":
+                            });
+                          case 'REJECTED':
                             return rejectedCards.map((card, i) => {
                               return (
                                 <PatientCard key={`card-id-${i}`} card={card} />
                               );
-                            })
-                            break;
-                          case "DONE":
+                            });
+                          case 'DONE':
                             return doneCards.map((card, i) => {
                               return (
                                 <PatientCard key={`card-id-${i}`} card={card} />
                               );
-                            })
-                            break;
-
+                            });
                           default:
-                            return <Fragment></Fragment>
-                            break;
+                            return <Fragment></Fragment>;
                         }
                       })()}
                     </Card.Body>

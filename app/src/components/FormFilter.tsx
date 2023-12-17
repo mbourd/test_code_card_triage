@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Col, Row, Button, Form, InputGroup } from "react-bootstrap";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { AppContent, ContextApp, ICard } from "../App";
+import React, { useContext, useEffect, useState } from 'react';
+import { Col, Row, Button, Form, InputGroup } from 'react-bootstrap';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { AppContent, ContextApp, ICard } from '../App';
 
 interface ILabelArrhytmia {
   label: string;
@@ -12,24 +12,28 @@ interface ILabelArrhytmia {
 const FormFilter = (props: any) => {
   const contextAppValue = useContext<AppContent>(ContextApp);
 
-  const [currentCategory, setCurrentCategory] = useState<string>("all");
-  const [currentKeyword, setCurrentKeyword] = useState<string>("");
-  const [categoriesArrhythmias, setCategoriesArrhythmias] = useState<ILabelArrhytmia[]>([])
+  const [currentCategory, setCurrentCategory] = useState<string>('all');
+  const [currentKeyword, setCurrentKeyword] = useState<string>('');
+  const [categoriesArrhythmias, setCategoriesArrhythmias] = useState<
+    ILabelArrhytmia[]
+  >([]);
 
   const cardsDisplayed = contextAppValue.cardsDisplayed;
   const setCardsDisplayed = contextAppValue.setCardsDisplayed;
 
   useEffect(() => {
-    let listArrhytmias: string[] = []
+    let listArrhytmias: string[] = [];
     cardsDisplayed.forEach((c: ICard) => {
       c.arrhythmias.forEach((a: string) => {
         if (!listArrhytmias.includes(a)) {
-          listArrhytmias.push(a)
+          listArrhytmias.push(a);
         }
-      })
-    })
-    setCategoriesArrhythmias(listArrhytmias.map((a:string) => ({label:a, value:a})))
-  },[cardsDisplayed])
+      });
+    });
+    setCategoriesArrhythmias(
+      listArrhytmias.map((a: string) => ({ label: a, value: a }))
+    );
+  }, [cardsDisplayed]);
 
   return (
     <Formik
@@ -42,7 +46,7 @@ const FormFilter = (props: any) => {
       validationSchema={() =>
         Yup.object().shape({
           keyword: Yup.string().optional(),
-          category: Yup.string().required("Veuillez selectionner la catégorie"),
+          category: Yup.string().required('Veuillez selectionner la catégorie'),
         })
       }
       // Lors du submit
@@ -57,10 +61,10 @@ const FormFilter = (props: any) => {
             cardsDisplayed[i].patient_name
           );
 
-          if (arrhythmia === "all") {
+          if (arrhythmia === 'all') {
             cardsDisplayed[i].display = nameMatch;
           } else {
-            let test1 = patientName === "" ? true : nameMatch;
+            let test1 = patientName === '' ? true : nameMatch;
             let test2 = cardsDisplayed[i].arrhythmias.find(
               (name) => name === arrhythmia
             )
@@ -86,33 +90,36 @@ const FormFilter = (props: any) => {
             <Col></Col>
             <Col></Col>
             <Col>
-              <InputGroup className="mb-3">
+              <InputGroup className='mb-3'>
                 <Form.Control
-                  name="keyword"
-                  type="text"
-                  placeholder="Patient name"
+                  name='keyword'
+                  type='text'
+                  placeholder='Patient name'
                   onChange={(e) => {
-                    setFieldValue("keyword", e.target.value);
+                    setFieldValue('keyword', e.target.value);
                   }}
                   value={values.keyword}
                   isInvalid={touched.keyword && !!errors.keyword}
                 />
-                <Form.Control.Feedback type="invalid">
+                <Form.Control.Feedback type='invalid'>
                   {errors.keyword}
                 </Form.Control.Feedback>
 
                 <Form.Control
-                  name="category"
-                  as="select"
+                  name='category'
+                  as='select'
                   onChange={(e) => {
-                    setFieldValue("category", e.target.value);
+                    setFieldValue('category', e.target.value);
                   }}
                   value={values.category}
                 >
-                  <option value="all">Tous</option>
+                  <option value='all'>Tous</option>
                   {categoriesArrhythmias.map((option, index) => {
                     return (
-                      <option key={`option-${index}`} value={option.value}>
+                      <option
+                        key={`option-${index}`}
+                        value={option.value}
+                      >
                         {option.label || option.value}
                       </option>
                     );
@@ -120,9 +127,9 @@ const FormFilter = (props: any) => {
                 </Form.Control>
 
                 <Button
-                  variant="primary"
-                  id="button-addon2"
-                  type="submit"
+                  variant='primary'
+                  id='button-addon2'
+                  type='submit'
                   onClick={(e?: any): void => {
                     handleSubmit(e);
                   }}

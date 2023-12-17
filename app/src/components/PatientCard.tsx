@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from 'react';
 import {
   Card,
   Button,
@@ -8,9 +8,9 @@ import {
   Tabs,
   Tab,
   ListGroup,
-} from "react-bootstrap";
-import { ContextApp } from "../App";
-import { ICard } from "../App";
+} from 'react-bootstrap';
+import { ContextApp } from '../App';
+import { ICard } from '../App';
 
 interface IOwnProps {
   card: ICard;
@@ -22,23 +22,32 @@ const PatientCard: React.FC<IOwnProps> = ({ card }) => {
   const cardsDisplayed = contextAppValue.cardsDisplayed;
   const setCardsDisplayed = contextAppValue.setCardsDisplayed;
 
-  const onClickDone = (card: ICard) => {
-    cardsDisplayed[cardsDisplayed.indexOf(card)].status = "DONE";
-    setCardsDisplayed([...cardsDisplayed]);
-  };
+  const onClickDone = useCallback(
+    (card: ICard) => {
+      cardsDisplayed[cardsDisplayed.indexOf(card)].status = 'DONE';
+      setCardsDisplayed([...cardsDisplayed]);
+    },
+    [cardsDisplayed, setCardsDisplayed]
+  );
 
-  const onClickReject = (card: ICard) => {
-    cardsDisplayed[cardsDisplayed.indexOf(card)].status = "REJECTED";
-    setCardsDisplayed([...cardsDisplayed]);
-  };
+  const onClickReject = useCallback(
+    (card: ICard) => {
+      cardsDisplayed[cardsDisplayed.indexOf(card)].status = 'REJECTED';
+      setCardsDisplayed([...cardsDisplayed]);
+    },
+    [cardsDisplayed, setCardsDisplayed]
+  );
 
   const show = () => {
     if (card.display) {
       return (
-        <Card className="patient-card">
+        <Card className='patient-card'>
           <Card.Header>
-            <Tabs defaultActiveKey="first">
-              <Tab eventKey="first" title="Patient">
+            <Tabs defaultActiveKey='first'>
+              <Tab
+                eventKey='first'
+                title='Patient'
+              >
                 <Card.Body>
                   <Card.Title>
                     <Row>
@@ -51,7 +60,10 @@ const PatientCard: React.FC<IOwnProps> = ({ card }) => {
                   </Card.Title>
                 </Card.Body>
               </Tab>
-              <Tab eventKey="second" title="Arrhythmias">
+              <Tab
+                eventKey='second'
+                title='Arrhythmias'
+              >
                 <Card.Body>
                   <ListGroup>
                     {card.arrhythmias.map((v: string, i: number) => {
@@ -69,15 +81,21 @@ const PatientCard: React.FC<IOwnProps> = ({ card }) => {
           <Card.Footer>
             <Row>
               <Col>
-                {card.status !== "REJECTED" && (
-                  <Button variant="danger" onClick={() => onClickReject(card)}>
+                {card.status !== 'REJECTED' && (
+                  <Button
+                    variant='danger'
+                    onClick={() => onClickReject(card)}
+                  >
                     REJECT
                   </Button>
                 )}
               </Col>
               <Col>
-                {card.status !== "DONE" && (
-                  <Button variant="success" onClick={() => onClickDone(card)}>
+                {card.status !== 'DONE' && (
+                  <Button
+                    variant='success'
+                    onClick={() => onClickDone(card)}
+                  >
                     DONE
                   </Button>
                 )}
